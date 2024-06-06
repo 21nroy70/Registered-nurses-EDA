@@ -1,0 +1,19 @@
+## Registered Nurses:
+
+```{r, include = FALSE}
+library(tidyverse)
+```
+
+```{r, include = FALSE}
+nurses <- read_csv("https://raw.githubusercontent.com/36-SURE/36-SURE.github.io/main/data/nurses.csv")
+```
+
+### Live look at the data and columns
+```{r}
+nurses %>% glimpse()
+```
+
+### Better view of column names
+```{r}
+nurses %>% names()
+```
