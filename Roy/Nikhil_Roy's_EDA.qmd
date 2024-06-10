@@ -2,6 +2,7 @@
 
 ```{r, include = FALSE}
 library(tidyverse)
+library(GGally)
 ```
 
 ```{r, include = FALSE}
@@ -9,11 +10,192 @@ nurses <- read_csv("https://raw.githubusercontent.com/36-SURE/36-SURE.github.io/
 ```
 
 ### Live look at the data and columns
-```{r}
+
+```{r, include = FALSE}
 nurses %>% glimpse()
 ```
 
 ### Better view of column names
+
 ```{r}
 nurses %>% names()
 ```
+
+### Select specific columns to use in data and remove null value rows in selected features (aka columns)
+
+```{r}
+cleaned_nurses <- nurses %>% select(State, Year, `Total Employed RN`, `Annual Salary Avg`, `Annual 10th Percentile`: `Annual 90th Percentile`) %>%
+  na.omit()
+```
+
+### Check correlations amongst variables
+```{r, warning=FALSE}
+nurses |> 
+  select(-State, - `Hourly Wage Avg`, -`Hourly Wage Median`, -`Hourly 10th Percentile`: -`Yearly Total Employed (State)_Aggregate`) %>%
+  ggpairs(title = "Correlations amongst several features")
+```
+Notice, that the Annual Salary Avg and Year is the 2nd highest correlation but #1 most relevant -> since Annual Salary Median and Annual Salary Mean are very highly correlated due to the terms median and mean being very similar to each other: Mean is middle 50% and mean is the average so we expect median to be very close to mean correlation
+
+### Make a plot with the distribution of annual salary average and facet it with year. Then, make another plot with year and assosiated annual salary average, facet with state. Also, make a stacked bar chart of x axis with States and y axis of annual salary avg, with the color being the annual 10th, 25th, 75th, and 90th percentile.
+
+```{r}
+cleaned_nurses %>%
+  group_by(Year) %>%
+  ggplot(aes(State, `Annual Salary Avg`)) +
+  geom_point(alpha = 0.8, color = "darkblue") +
+  facet_wrap(~ Year, scales = "free_y") +
+  labs(
+    title = "Distribution of Average Annual Salary Across the Years",
+    x = "State",  # Keep x-axis label
+    y = "Average Annual Salary"
+  ) +
+  theme(
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    plot.title = element_text(hjust = 0.5),
+    strip.text = element_text(size = 10),
+    axis.text.y = element_text(size = 5.5)
+  )
+
+```
+Note: Scales change as we increase the Years -> Y Max goes up. 
+
+
+### Let's Take a Closer Look at the Average Annual Salary per Year Amongst the US States 
+
+```{r}
+cleaned_nurses %>%
+  group_by(Year) %>%
+  summarize(average_salary = mean(`Annual Salary Avg`)) %>%
+  ggplot(mapping = aes(x = Year, y = average_salary)) +
+  geom_point() +
+  geom_line()
+```
+### Let's Check The Correlation:
+```{r}
+cor(cleaned_nurses$Year, cleaned_nurses$`Annual Salary Avg`)
+```
+
+
+### Let's now add the different salary percentiles and see how they line up and are placed amongst the data
+```{r}
+salaries_nurses <- cleaned_nurses %>%
+  group_by(Year) %>%
+  summarize(average_salary = mean(`Annual Salary Avg`), 
+            tenth_percentile = mean(`Annual 10th Percentile`),
+            twenty_fifth_percentile = mean(`Annual 25th Percentile`),
+            seventy_fifth_percentile = mean(`Annual 75th Percentile`),
+            ninety_percentile = mean(`Annual 90th Percentile`)
+            )
+```
+
+### Plot the same graph as earlier but now include the percentiles as horizontal lines
+
+```{r}
+
+# Assuming salaries_nurses is your data frame and it has columns for the different percentiles
+salaries_nurses_long <- salaries_nurses %>%
+  pivot_longer(
+    cols = c(tenth_percentile, twenty_fifth_percentile, seventy_fifth_percentile, ninety_percentile),
+    names_to = "percentile",
+    values_to = "salary"
+  )
+
+ggplot(salaries_nurses_long, aes(y = average_salary, x = salary, color = percentile)) +
+  geom_point(size = 3) +
+  scale_color_manual(
+    values = c(
+      "tenth_percentile" = "red",
+      "twenty_fifth_percentile" = "royalblue",
+      "seventy_fifth_percentile" = "gold",
+      "ninety_percentile" = "yellow"
+    ),
+    labels = c(
+      "tenth_percentile" = "10th Percentile",
+      "twenty_fifth_percentile" = "25th Percentile",
+      "seventy_fifth_percentile" = "75th Percentile",
+      "ninety_percentile" = "90th Percentile"
+    )
+  ) +
+  facet_wrap(~ Year) +
+  labs(
+    title = "Distribution of Average Annual Salary Across the Years",
+    x = "Percentiles Of Salaries",
+    y = "Average Annual Salary Amongst All States For Given Year",
+    color = "Percentile"
+  ) +
+  theme(
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    plot.title = element_text(hjust = 0.5),
+    strip.text = element_text(size = 10),
+    axis.text.y = element_text(size = 5.5)
+  )
+
+
+```
+
+### Scatterplot Visual of this:
+
+```{r}
+
+salaries_nurses_long <- salaries_nurses %>%
+  pivot_longer(
+    cols = c(tenth_percentile, twenty_fifth_percentile, seventy_fifth_percentile, ninety_percentile),
+    names_to = "percentile",
+    values_to = "salary"
+  )
+
+ggplot(salaries_nurses_long, aes(y = average_salary, x = salary, color = percentile)) +
+  geom_point(size = 3) +
+  scale_color_manual(
+    values = c(
+      "tenth_percentile" = "red",
+      "twenty_fifth_percentile" = "royalblue",
+      "seventy_fifth_percentile" = "gold",
+      "ninety_percentile" = "yellow"
+    ),
+    labels = c(
+      "twenty_fifth_percentile" = "25th Percentile",
+      "tenth_percentile" = "10th Percentile",
+      "seventy_fifth_percentile" = "75th Percentile",
+      "ninety_percentile" = "90th Percentile"
+    )
+  ) +
+ 
+  labs(
+    title = "Distribution of Average Annual Salary Across the Years",
+    x = "Percentiles Of Salaries Over The Years",
+    y = "Average Annual Salary",
+    color = "Percentile"
+  ) +
+  theme(
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    plot.title = element_text(hjust = 0.5),
+    strip.text = element_text(size = 10),
+    axis.text.y = element_text(size = 5.5)
+  ) +
+  coord_equal() +
+  ggthemes::scale_color_tableau()
+  
+
+
+```
+
+```{r}
+salaries_nurses_long %>%
+  ggplot(mapping = aes(x = Year, y = salary, color = percentile)) +
+  geom_point() +
+  geom_line() +
+  labs(
+    y = "Average Salaries",
+    title = "Average Salaries Over The Years Broken Down Into Percentiles"
+  ) +
+  scale_y_continuous(limits = c(30000, 110000))
+
+```
+
+
+
+
