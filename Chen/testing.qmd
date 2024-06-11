@@ -12,7 +12,16 @@ nurses <- read_csv("https://raw.githubusercontent.com/36-SURE/36-SURE.github.io/
 head(nurses)
 count(nurses)
 
-# want to explore a hypothesis 
+
+# potential hypothesis--places with higher location quotients will have higher wages at some percentile; if location quotient is very low, nurses are in high demand, so their wages would be high
+# percentile=hourly wage
+# Location Quotient: if u randomly sample someone, 5x more likely to get a healthcare in this specific state vs nationally; location quotient < 1 would mean 
+# I understand that the location quotient refers to the concentration of an occupation in a specific area to the concentration of that same occupation across the entire country
+
+# hourly 10th percentile= 10% of people make less than then 20.75 in alabama in year 2020, and 90% make more than 20.75
+# location quotient represents the ratio of an occupation’s share of employment in a given area to that occupation’s share of employment in the U.S. as a whole
+# I'm having trouble deciding what percentile(s) to include in the EDA? Also what visualizations would you suggest making
+# I calculated the mean location quotient for each state across all years
 
 
 ```
@@ -25,6 +34,7 @@ You can add options to executable code like this
 # Location Quotient: if u randomly sample someone, 5x more likely to get a healthcare in this specific state vs nationally; location quotient < 1 would mean 
 
 # potential hypothesis--places with higher location quotients will have higher wages at some percentile; if location quotient is very low, nurses are in high demand, so their wages would be high
+# does this have anything to do how densely populated the state is?
 # 10th percentile: 10% of people make less than that, 90% of people make more than that 
 # bring in unemployment rate for each state from other data source--when unemployment rate goes up, 
 
@@ -32,18 +42,70 @@ You can add options to executable code like this
 
 table(nurses$State)
 table(nurses$Year)
+
 # facet by year
 
 # top 10 most populated (total employed RN), how does top 10 differ by bottom 10 overall or by year 
 
+# mean of total employed for each state across all years
 nurses |>
   select(State, Year, `Total Employed RN`) |>
   group_by(State) |>
-  summarize(ave=mean(`Total Employed RN`)) |>
-  arrange(-ave)
+  summarize(ave_employment=mean(`Total Employed RN`)) |>
+  arrange(-ave_employment)
 
+# mean location quotient for year state across all years
+nurses |>
+  select(State, Year, `Location Quotient`) |>
+  group_by(State) |>
+  summarize(ave_locquo=mean(`Location Quotient`, na.rm=TRUE)) |>
+  arrange(-ave_locquo)
 
-#
+# 12 na's, 11 filled in each state for location quotient
+nurses |>
+  select(State, `Location Quotient`) |>
+  group_by(State) |>
+  summarize(num_na = sum(is.na(`Location Quotient`)))
+
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+
+```{r}
+# Places with higher location quotients have higher wages at a certain percentile
+# do hourly 25th percentile, hourly wage median, hourly 75th percentile, hourly 90th percentile, 
+
+head(nurses)
+
+# location quotient vs hourly wage median w/o modifying df (across all years )
+nurses |>
+  ggplot(aes(x=`Location Quotient`, y=`Hourly Wage Median`)) +
+  geom_point(color = "darkred", size = 3, alpha = 0.5)
+
+# 25% of people are making less than that = 25th percentile
+# maybe just filter for a certain year (2020)
+# 54 by 22 
+nurses <- read_csv("https://raw.githubusercontent.com/36-SURE/36-SURE.github.io/main/data/nurses.csv")
+head(nurses)
+# library(dplyr)
+
+# filter for only year 2020 and make into pivot_longer
+# cols: State, Percentile type, hourly percentile
+nurses_long_2020 <- nurses |> 
+  select(State, Year, `Hourly 25th Percentile`, `Hourly Wage Median`, `Hourly 75th Percentile`, `Hourly 90th Percentile`, `Location Quotient`) |>
+  filter(Year == 2020) |>
+  pivot_longer(cols=c(`Hourly 25th Percentile`, `Hourly Wage Median`, `Hourly 75th Percentile`, `Hourly 90th Percentile`), 
+               names_to='Percentile',
+               values_to='hourly wage') # make Percentile a factor variable
+
+nurses_long_2020 |>
+  mutate(Percentile=factor(Percentile)) |>
+  ggplot(aes(x=`Location Quotient`, y=`hourly wage`, color=Percentile)) +
+  geom_point(size = 3, alpha = 0.5) +
+  geom_smooth(aes(color=Percentile), se=FALSE) # add line 
+
+# faecet by year
+# geom smooth 
+# +facet_wrap~year
+  
+  
+```
