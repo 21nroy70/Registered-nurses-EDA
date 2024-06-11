@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>nikhil_roys_eda</title>
+<title>Do Annual Salaries Of Registered Nurses Today Differ Than 20 Years Ago?</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,40 +19,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -77,108 +43,59 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Do Annual Salaries Of Registered Nurses Today Differ Than 20 Years Ago?</h1>
+</div>
 
 
 
-<section id="registered-nurses" class="level2">
-<h2 class="anchored" data-anchor-id="registered-nurses">Registered Nurses:</h2>
-<section id="live-look-at-the-data-and-columns" class="level3">
-<h3 class="anchored" data-anchor-id="live-look-at-the-data-and-columns">Live look at the data and columns</h3>
-</section>
-<section id="better-view-of-column-names" class="level3">
-<h3 class="anchored" data-anchor-id="better-view-of-column-names">Better view of column names</h3>
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="glimpse-of-data" class="level3">
+<h3 class="anchored" data-anchor-id="glimpse-of-data">Glimpse of Data:</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>nurses <span class="sc">%&gt;%</span> <span class="fu">names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "State"                                          
- [2] "Year"                                           
- [3] "Total Employed RN"                              
- [4] "Employed Standard Error (%)"                    
- [5] "Hourly Wage Avg"                                
- [6] "Hourly Wage Median"                             
- [7] "Annual Salary Avg"                              
- [8] "Annual Salary Median"                           
- [9] "Wage/Salary standard error (%)"                 
-[10] "Hourly 10th Percentile"                         
-[11] "Hourly 25th Percentile"                         
-[12] "Hourly 75th Percentile"                         
-[13] "Hourly 90th Percentile"                         
-[14] "Annual 10th Percentile"                         
-[15] "Annual 25th Percentile"                         
-[16] "Annual 75th Percentile"                         
-[17] "Annual 90th Percentile"                         
-[18] "Location Quotient"                              
-[19] "Total Employed (National)_Aggregate"            
-[20] "Total Employed (Healthcare, National)_Aggregate"
-[21] "Total Employed (Healthcare, State)_Aggregate"   
-[22] "Yearly Total Employed (State)_Aggregate"        </code></pre>
+<pre><code>Rows: 1,242
+Columns: 22
+$ State                                             &lt;chr&gt; "Alabama", "Alaska",…
+$ Year                                              &lt;dbl&gt; 2020, 2020, 2020, 20…
+$ `Total Employed RN`                               &lt;dbl&gt; 48850, 6240, 55520, …
+$ `Employed Standard Error (%)`                     &lt;dbl&gt; 2.9, 13.0, 3.7, 4.2,…
+$ `Hourly Wage Avg`                                 &lt;dbl&gt; 28.96, 45.81, 38.64,…
+$ `Hourly Wage Median`                              &lt;dbl&gt; 28.19, 45.23, 37.98,…
+$ `Annual Salary Avg`                               &lt;dbl&gt; 60230, 95270, 80380,…
+$ `Annual Salary Median`                            &lt;dbl&gt; 58630, 94070, 79010,…
+$ `Wage/Salary standard error (%)`                  &lt;dbl&gt; 0.8, 1.4, 0.9, 1.4, …
+$ `Hourly 10th Percentile`                          &lt;dbl&gt; 20.75, 31.50, 27.66,…
+$ `Hourly 25th Percentile`                          &lt;dbl&gt; 23.73, 36.94, 32.58,…
+$ `Hourly 75th Percentile`                          &lt;dbl&gt; 33.15, 53.31, 44.67,…
+$ `Hourly 90th Percentile`                          &lt;dbl&gt; 38.67, 60.70, 50.14,…
+$ `Annual 10th Percentile`                          &lt;dbl&gt; 43150, 65530, 57530,…
+$ `Annual 25th Percentile`                          &lt;dbl&gt; 49360, 76830, 67760,…
+$ `Annual 75th Percentile`                          &lt;dbl&gt; 68960, 110890, 92920…
+$ `Annual 90th Percentile`                          &lt;dbl&gt; 80420, 126260, 10429…
+$ `Location Quotient`                               &lt;dbl&gt; 1.20, 0.98, 0.91, 1.…
+$ `Total Employed (National)_Aggregate`             &lt;dbl&gt; 140019790, 140019790…
+$ `Total Employed (Healthcare, National)_Aggregate` &lt;dbl&gt; 8632190, 8632190, 86…
+$ `Total Employed (Healthcare, State)_Aggregate`    &lt;dbl&gt; 128600, 17730, 17101…
+$ `Yearly Total Employed (State)_Aggregate`         &lt;dbl&gt; 1903210, 296300, 283…</code></pre>
 </div>
 </div>
 </section>
-<section id="select-specific-columns-to-use-in-data-and-remove-null-value-rows-in-selected-features-aka-columns" class="level3">
-<h3 class="anchored" data-anchor-id="select-specific-columns-to-use-in-data-and-remove-null-value-rows-in-selected-features-aka-columns">Select specific columns to use in data and remove null value rows in selected features (aka columns)</h3>
+<section id="correlation-decision-process-of-feature-selection" class="level3">
+<h3 class="anchored" data-anchor-id="correlation-decision-process-of-feature-selection">Correlation + Decision Process Of Feature Selection:</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cleaned_nurses <span class="ot">&lt;-</span> nurses <span class="sc">%&gt;%</span> <span class="fu">select</span>(State, Year, <span class="st">`</span><span class="at">Total Employed RN</span><span class="st">`</span>, <span class="st">`</span><span class="at">Annual Salary Avg</span><span class="st">`</span>, <span class="st">`</span><span class="at">Annual 10th Percentile</span><span class="st">`</span><span class="sc">:</span> <span class="st">`</span><span class="at">Annual 90th Percentile</span><span class="st">`</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="make-a-plot-with-the-distribution-of-annual-salary-average-and-facet-it-with-year.-then-make-another-plot-with-year-and-assosiated-annual-salary-average-facet-with-state.-also-make-a-stacked-bar-chart-of-x-axis-with-states-and-y-axis-of-annual-salary-avg-with-the-color-being-the-annual-10th-25th-75th-and-90th-percentile." class="level3">
-<h3 class="anchored" data-anchor-id="make-a-plot-with-the-distribution-of-annual-salary-average-and-facet-it-with-year.-then-make-another-plot-with-year-and-assosiated-annual-salary-average-facet-with-state.-also-make-a-stacked-bar-chart-of-x-axis-with-states-and-y-axis-of-annual-salary-avg-with-the-color-being-the-annual-10th-25th-75th-and-90th-percentile.">Make a plot with the distribution of annual salary average and facet it with year. Then, make another plot with year and assosiated annual salary average, facet with state. Also, make a stacked bar chart of x axis with States and y axis of annual salary avg, with the color being the annual 10th, 25th, 75th, and 90th percentile.</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cleaned_nurses <span class="sc">|&gt;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year) <span class="sc">%&gt;%</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(State, <span class="st">`</span><span class="at">Annual Salary Avg</span><span class="st">`</span>)) <span class="sc">+</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"darkblue"</span>) <span class="sc">+</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">color =</span> <span class="st">"darkblue"</span>) <span class="sc">+</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Year, <span class="at">scales =</span> <span class="st">"free_y"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>`geom_line()`: Each group consists of only one observation.
-ℹ Do you need to adjust the group aesthetic?
-`geom_line()`: Each group consists of only one observation.
-ℹ Do you need to adjust the group aesthetic?
-`geom_line()`: Each group consists of only one observation.
-ℹ Do you need to adjust the group aesthetic?
-`geom_line()`: Each group consists of only one observation.
-ℹ Do you need to adjust the group aesthetic?
-`geom_line()`: Each group consists of only one observation.
-ℹ Do you need to adjust the group aesthetic?
-`geom_line()`: Each group consists of only one observation.
-ℹ Do you need to adjust the group aesthetic?
-`geom_line()`: Each group consists of only one observation.
-ℹ Do you need to adjust the group aesthetic?
-`geom_line()`: Each group consists of only one observation.
-ℹ Do you need to adjust the group aesthetic?
-`geom_line()`: Each group consists of only one observation.
-ℹ Do you need to adjust the group aesthetic?
-`geom_line()`: Each group consists of only one observation.
-ℹ Do you need to adjust the group aesthetic?
-`geom_line()`: Each group consists of only one observation.
-ℹ Do you need to adjust the group aesthetic?
-`geom_line()`: Each group consists of only one observation.
-ℹ Do you need to adjust the group aesthetic?
-`geom_line()`: Each group consists of only one observation.
-ℹ Do you need to adjust the group aesthetic?
-`geom_line()`: Each group consists of only one observation.
-ℹ Do you need to adjust the group aesthetic?
-`geom_line()`: Each group consists of only one observation.
-ℹ Do you need to adjust the group aesthetic?
-`geom_line()`: Each group consists of only one observation.
-ℹ Do you need to adjust the group aesthetic?
-`geom_line()`: Each group consists of only one observation.
-ℹ Do you need to adjust the group aesthetic?
-`geom_line()`: Each group consists of only one observation.
-ℹ Do you need to adjust the group aesthetic?
-`geom_line()`: Each group consists of only one observation.
-ℹ Do you need to adjust the group aesthetic?
-`geom_line()`: Each group consists of only one observation.
-ℹ Do you need to adjust the group aesthetic?
-`geom_line()`: Each group consists of only one observation.
-ℹ Do you need to adjust the group aesthetic?
-`geom_line()`: Each group consists of only one observation.
-ℹ Do you need to adjust the group aesthetic?
-`geom_line()`: Each group consists of only one observation.
-ℹ Do you need to adjust the group aesthetic?</code></pre>
-</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -187,7 +104,84 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+<p>Notice, that the Annual Salary Avg and Year is the 2nd highest correlation but #1 most relevant -&gt; since Annual Salary Median and Annual Salary Mean are very highly correlated due to the terms median and mean being very similar to each other: Mean is middle 50% and mean is the average so we expect median to be very close to mean correlation</p>
 </section>
+<section id="lets-take-a-closer-look-at-the-average-annual-salary-per-year-amongst-the-us-states" class="level3">
+<h3 class="anchored" data-anchor-id="lets-take-a-closer-look-at-the-average-annual-salary-per-year-amongst-the-us-states">Let’s Take a Closer Look at the Average Annual Salary per Year Amongst the US States</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Nikhil_Roy-s_EDA_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="now-that-we-know-why-i-chose-year-and-annual-salary-average-lets-create-a-plot-with-the-distribution-of-annual-salary-average-among-the-us-and-facet-it-with-year." class="level3">
+<h3 class="anchored" data-anchor-id="now-that-we-know-why-i-chose-year-and-annual-salary-average-lets-create-a-plot-with-the-distribution-of-annual-salary-average-among-the-us-and-facet-it-with-year.">Now that we know why I chose <code>Year</code> and <code>Annual Salary Average</code>, let’s create a plot with the distribution of <code>annual salary average</code> among the US and facet it with <code>year</code>.</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Nikhil_Roy-s_EDA_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Note: Scales change as we increase the Years -&gt; Y Max goes up.</p>
+</section>
+<section id="same-graph-but-with-percentiles-added-on" class="level3">
+<h3 class="anchored" data-anchor-id="same-graph-but-with-percentiles-added-on">Same Graph, but with percentiles added on:</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Nikhil_Roy-s_EDA_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="lets-compare-recents-5-years-with-first-5-years-of-data-set-and-split-the-salaries-down-into-percentiles" class="level3">
+<h3 class="anchored" data-anchor-id="lets-compare-recents-5-years-with-first-5-years-of-data-set-and-split-the-salaries-down-into-percentiles">Let’s Compare Recents 5 Years with First 5 Years of Data Set and Split The Salaries Down Into Percentiles:</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Nikhil_Roy-s_EDA_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="hey-there-are-too-many-scatterplots-and-facets-please-just-put-it-all-into-1-plot" class="level3">
+<h3 class="anchored" data-anchor-id="hey-there-are-too-many-scatterplots-and-facets-please-just-put-it-all-into-1-plot">Hey, there are too many scatterplots and facets, please just put it all into 1 plot…</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Nikhil_Roy-s_EDA_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="an-even-better-plot-to-visualize-the-same-thing" class="level3">
+<h3 class="anchored" data-anchor-id="an-even-better-plot-to-visualize-the-same-thing">An Even Better Plot To Visualize The Same Thing</h3>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Scale for colour is already present.
+Adding another scale for colour, which will replace the existing scale.</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="Nikhil_Roy-s_EDA_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 
 </main>
