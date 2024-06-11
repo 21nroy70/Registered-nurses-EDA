@@ -6,21 +6,44 @@ editor: visual
 
 ## Quarto
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
 ```{r}
-1 + 1
+library(tidyverse)
+nurses <- read_csv("https://raw.githubusercontent.com/36-SURE/36-SURE.github.io/main/data/nurses.csv")
+head(nurses)
+count(nurses)
+
+# want to explore a hypothesis 
+
+
 ```
 
 You can add options to executable code like this
 
 ```{r}
-#| echo: false
-2 * 2
+# yearly total employment (State)
+# potential research questions: how does employment vary across different years and is there a relationship between employment rate and hourly wage 
+# Location Quotient: if u randomly sample someone, 5x more likely to get a healthcare in this specific state vs nationally; location quotient < 1 would mean 
+
+# potential hypothesis--places with higher location quotients will have higher wages at some percentile; if location quotient is very low, nurses are in high demand, so their wages would be high
+# 10th percentile: 10% of people make less than that, 90% of people make more than that 
+# bring in unemployment rate for each state from other data source--when unemployment rate goes up, 
+
+# each row represent a specific employment rate for a state by year 
+
+table(nurses$State)
+table(nurses$Year)
+# facet by year
+
+# top 10 most populated (total employed RN), how does top 10 differ by bottom 10 overall or by year 
+
+nurses |>
+  select(State, Year, `Total Employed RN`) |>
+  group_by(State) |>
+  summarize(ave=mean(`Total Employed RN`)) |>
+  arrange(-ave)
+
+
+#
 ```
 
 The `echo: false` option disables the printing of code (only output is displayed).
