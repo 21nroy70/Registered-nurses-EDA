@@ -37,13 +37,13 @@ cleaned_nurses <- nurses %>% select(State, Year, `Total Employed RN`, `Annual Sa
 
 ```{r, warning=FALSE}
 nurses |> 
-  select(-State, - `Hourly Wage Avg`, -`Hourly Wage Median`, -`Hourly 10th Percentile`: -`Yearly Total Employed (State)_Aggregate`) %>%
+  select(-State, -`Employed Standard Error (%)`, -`Wage/Salary standard error (%)`, - `Hourly Wage Avg`, -`Hourly Wage Median`, -`Hourly 10th Percentile`: -`Yearly Total Employed (State)_Aggregate`, `Location Quotient`) %>%
   ggpairs(title = "Correlations Amongst Several Features", 
           upper = list(continuous = wrap("cor"))) +
   theme(
     plot.title = element_text(hjust = 0.5, size = 16),
-    strip.text = element_text(size = 10),
-    axis.text.x = element_text(size = 1, angle = 45, hjust = 1),
+    strip.text = element_text(size = 6),
+    axis.text.x = element_text(size = 0, angle = 45, hjust = 1),
     axis.text.y = element_text(size = 5)
   )
 ```
@@ -61,14 +61,17 @@ cleaned_nurses %>%
   geom_line() +
   labs(title = "Average US Salary Among The Years")
 ```
+```{r}
 
+round(cor(cleaned_nurses$Year, cleaned_nurses$`Annual Salary Avg`),3)
+```
 ### Now that we know why I chose `Year` and `Annual Salary Average`, let's create a plot with the distribution of `annual salary average` among the US and facet it with `year`.
 
 ```{r}
 cleaned_nurses %>%
   group_by(Year) %>%
   ggplot(aes(State, `Annual Salary Avg`)) +
-  geom_point(alpha = 0.8, color = "chocolate4") +
+  geom_point(alpha = 0.8, color = "purple") +
   facet_wrap(~ Year, nrow = 3) +
   labs(
     title = "Distribution of Average Annual Salary Across the Years",
@@ -230,3 +233,9 @@ ggplot(cleaned_nurses_long, aes(y = average_salary, x = salary, color = percenti
 
 
 ```
+
+
+
+
+
+
